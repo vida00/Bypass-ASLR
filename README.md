@@ -7,9 +7,9 @@ respectively: disable stack cookie (Canary), disable stack protector (NX), disab
 libc used: /usr/lib/libc.so.6 <br/> 
 
 Enable ASLR: sudo sysctl kernel.randomize_va_space=1
-0 - ASLR Disable
-1 - ASLR partially enabled
-2 - FULL ASLR (the exploit does not bypass this)
+0 - ASLR Disable <br/>
+1 - ASLR partially enabled <br/>
+2 - FULL ASLR (the exploit does not bypass this) <br/>
 
 Dependencies:
 pip2 install pwntools
