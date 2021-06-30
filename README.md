@@ -6,7 +6,7 @@ Compile with: gcc elf.c -o elf -fno-stack-protector -z execstack -no-pie -w <br/
 respectively: disable stack cookie (Canary), disable stack protector (NX), disable instructions randomization, does not show warning messages <br/> 
 libc used: /usr/lib/libc.so.6 <br/> 
 
-Enable ASLR: sudo sysctl kernel.randomize_va_space=1
+Enable ASLR: sudo sysctl kernel.randomize_va_space=1 <br/>
 0 - ASLR Disable <br/>
 1 - ASLR partially enabled <br/>
 2 - FULL ASLR (the exploit does not bypass this) <br/>
