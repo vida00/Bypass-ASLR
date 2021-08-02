@@ -4,19 +4,23 @@
 #
 ### [ANOTACOES] ###
 ## [LEAK REAL ADDRESS FROM PUTS] ##
-# A PLT resolve em tempo de execucao o endereco passado p/ ela e manda p/ GOT
-# A GOT por sua vez fica encarregada de armazenar o valor real da funcao e executa-la em seu segmento
-# Entao passaremos puts@got para puts@plt, como ja estouramos o buffer o printf (que mais tarde sera convertido para puts caso nn tenha sido especificado nenhum formato)
-# o endereco da puts ja foi resolvido pela PLT e jogado para a GOT
-# Entao pedimos o endereco da puts@got(ja que eh aqui que o endereco real fica depois de ser resolvido pela PLT) atraves da puts@plt (que pegara e nos retornara na tela ja que a puts faz isso)
-#
+# A PLT se voce der um disas em uma funcao @plt vc vera que por conta do lazy binding ela ainda nn foi resolvida, ela tem um jmp para a GOT
+# Quando a funcao for chamada pela primeira vez ela sera resolvida pelo linker(ela so eh resolvida qnd for usada por conta do lazy binding) e ser armazenado na .got.plt
+# A GOT armazena os enderecos guardados na .got.plt
+# Precisamos vazar o endereco da puts para fazermos o calculo dos enderecos da libc ja que eles sao randomizados por conta do ASLR
+# Mas como vazamos o endereco da puts@got:
+# Nao precisamos chamar a puts para ser resolvida pq provavelmente ela ja foi (nesse exemplo ela ja foi usada e resolvida)
+# Entao passados para o puts@plt imprimir a puts@got que eh justamente o endereco efetivo da puts
+# Com esse endereco em maos podemos subtrair com o offset da puts da libc para chegar no endereco base da libc
+# Com o endereco base podemos somar com os offsets que queremos, assim obtendo o endereco completo da funcao
+# Perceba: apenas o endereco base da libc eh randomizado para ser usado, os offsets das funcoes da libc nao
+
 ## [EXPLOIT] ##
 # Com o endereco da puts em maos voltamos para a main
 # Pegamos o endereco do offset da puts e subtraimos com o endereco obtido e assim pegaremos o endereco base da libc
 # Pegamos o offset de /bin/sh e de system
 # Somaremos esses offsets com o endereco base da libc
 # Finalizamos com a nossa querida shell e deixamos o ASLR no chinelo
-#
 #
 
 from pwn import *
