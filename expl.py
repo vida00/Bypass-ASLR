@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 
 #
-#
 ### [ANOTACOES] ###
 ## [LEAK REAL ADDRESS FROM PUTS] ##
 # A PLT se voce der um disas em uma funcao @plt vc vera que por conta do lazy binding ela ainda nn foi resolvida, ela tem um jmp para a GOT
